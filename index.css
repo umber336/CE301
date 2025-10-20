@@ -1,0 +1,31 @@
+*,
+*::before,
+*::after{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    --clr-bg: darkslategrey;
+    --clr-square-light: white;
+    --clr-square-dark: black;
+
+    --sz-square: 64px;
+    --sz-board: calc(var(--sz-square) * 8);
+}
+
+body{
+    background-color: var(--clr-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.chessboard{
+    width: var(--sz-board);
+    height: var(--sz-board);
+    background: 
+    repeating-conic-gradient(var(--clr-square-light) 0 25%, var(--clr-square-dark) 0 50%) 100% / calc(var(--sz-square) * 2) calc(var(--sz-square) * 2);
+}
