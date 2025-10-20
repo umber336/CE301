@@ -6,19 +6,19 @@ const pieceOrder = ["rook", "knight", "bishop", "queen", "king", "bishop", "knig
 const boardSetup = () => {
     // black pieces
     pieceOrder.forEach((piece, index) => {
-        boardAppendPiece(squares[index], piece, "black")
+        boardCreatePiece(squares[index], piece, "black")
     })
     // black pawns
     for (let i = 8; i <= 15; i++) {
-        boardAppendPiece(squares[i], "pawn", "black");
+        boardCreatePiece(squares[i], "pawn", "black");
     }
     // white pawns
     for (let i = 48; i <= 55; i++) {
-        boardAppendPiece(squares[i], "pawn", "white");
+        boardCreatePiece(squares[i], "pawn", "white");
     }
     // white pieces
     pieceOrder.forEach((piece, index) => {
-        boardAppendPiece(squares[index + 56], piece, "white")
+        boardCreatePiece(squares[index + 56], piece, "white")
     })
 
     // add drag and drop
@@ -26,23 +26,30 @@ const boardSetup = () => {
     pieces = document.querySelectorAll(".piece")
 
     pieces.forEach((piece) => {
-        piece.addEventListener("dragstart", () => {
-            console.log("drag")
-        })
-
-        piece.addEventListener("dragover", (e) => {
-            e.preventDefault();
-            console.log("drag")
-        })
-
-        piece.addEventListener("drop", (e) => {
-            e.preventDefault();
-            console.log("drop")
+        piece.addEventListener("dragstart", (e) => {
+            e.dataTransfer.setData("text/plain", piece.outerHTML);
+            e.dataTransfer.effectAllowed = "move";
         })
     })
 }
 
-const boardAppendPiece = (square, piece, colour) => {
+squares.forEach((square) => {
+    square.addEventListener("dragover", (e) => {
+        e.preventDefault();
+    })
+
+    square.addEventListener("drop", (e) => {
+        e.preventDefault();
+        boardRemovePiece(square)
+        square.innerHTML = e.dataTransfer.getData("text/plain");
+    })
+})
+
+const boardRemovePiece = (square) => {
+    square.innerHTML = "";
+}
+
+const boardCreatePiece = (square, piece, colour) => {
     img = document.createElement("img");
     img.src = `assets/${piece}-${colour}.svg`;
     const newPiece = document.createElement("div");
