@@ -20,30 +20,31 @@ const boardSetup = () => {
     pieceOrder.forEach((piece, index) => {
         boardCreatePiece(squares[index + 56], piece, "white")
     })
+}
 
-    // add drag and drop
-
-    pieces = document.querySelectorAll(".piece")
+const boardControl = () => {
+    pieces = board.querySelectorAll(".piece")
+    let selected;
 
     pieces.forEach((piece) => {
         piece.addEventListener("dragstart", (e) => {
-            e.dataTransfer.setData("text/plain", piece.outerHTML);
-            e.dataTransfer.effectAllowed = "move";
+            selected = e.currentTarget;
+        })
+    })
+
+    squares.forEach((square) => {
+        square.addEventListener("dragover", (e) => {
+            e.preventDefault();
+        })
+
+        square.addEventListener("drop", (e) => {
+            e.preventDefault();
+            square.appendChild(selected)
         })
     })
 }
 
-squares.forEach((square) => {
-    square.addEventListener("dragover", (e) => {
-        e.preventDefault();
-    })
 
-    square.addEventListener("drop", (e) => {
-        e.preventDefault();
-        boardRemovePiece(square)
-        square.innerHTML = e.dataTransfer.getData("text/plain");
-    })
-})
 
 const boardRemovePiece = (square) => {
     square.innerHTML = "";
@@ -61,5 +62,6 @@ const boardCreatePiece = (square, piece, colour) => {
 
 (() => {
     boardSetup()
+    boardControl()
 })();
 
