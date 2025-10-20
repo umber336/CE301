@@ -39,6 +39,7 @@ const boardControl = () => {
 
         square.addEventListener("drop", (e) => {
             e.preventDefault();
+            boardRemovePiece(square)
             square.appendChild(selected)
         })
     })
