@@ -8,8 +8,8 @@
 
 :root{
     --clr-bg: darkslategrey;
-    --clr-square-light: white;
-    --clr-square-dark: black;
+    --clr-square-light: rgb(204, 233, 191);
+    --clr-square-dark: rgb(0, 172, 0);
 
     --sz-square: 64px;
     --sz-board: calc(var(--sz-square) * 8);
@@ -26,6 +26,24 @@ body{
 .chessboard{
     width: var(--sz-board);
     height: var(--sz-board);
-    background: 
-    repeating-conic-gradient(var(--clr-square-light) 0 25%, var(--clr-square-dark) 0 50%) 100% / calc(var(--sz-square) * 2) calc(var(--sz-square) * 2);
+    background: repeating-conic-gradient(var(--clr-square-light) 0 25%, var(--clr-square-dark) 0 50%) 100% / calc(var(--sz-square) * 2) calc(var(--sz-square) * 2);
+    display: grid;
+    grid-template-columns: repeat(8, var(--sz-square));
+    grid-template-rows: repeat(8, var(--sz-square));
+}
+
+.chessboard .square{
+    height: var(--sz-square);
+    width: var(--sz-square);
+}
+
+.chessboard .piece{
+    width: var(--sz-square);
+    height: var(--sz-square);
+    display: block;
+}
+
+.chessboard .piece img{
+    width: 100%;
+    height: 100%;
 }
